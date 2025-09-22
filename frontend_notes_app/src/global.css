@@ -1,41 +1,326 @@
 /**
- * WHAT IS THIS FILE?
- *
- * Globally applied styles for the ultralight Qwik template.
- * Uses a minimalistic light theme with specified color scheme.
+ * Global styles and theme tokens for Ocean Professional theme.
+ * Modern, minimalist UI with subtle shadows and rounded corners.
  */
 
 :root {
-  --primary-color: #000000;
-  --secondary-color: #333333;
-  --accent-color: #0078d4;
-  --background-color: #ffffff;
+  /* Ocean Professional palette */
+  --color-primary: #2563EB;     /* Blue */
+  --color-secondary: #F59E0B;   /* Amber - also used for success accents */
+  --color-success: #F59E0B;
+  --color-error: #EF4444;
+  --color-bg: #f9fafb;
+  --color-surface: #ffffff;
+  --color-text: #111827;
+
+  /* Additional tokens */
+  --radius-sm: 8px;
+  --radius-md: 12px;
+  --radius-lg: 16px;
+
+  --shadow-sm: 0 1px 2px rgba(0,0,0,0.06);
+  --shadow-md: 0 4px 12px rgba(0,0,0,0.08);
+  --shadow-lg: 0 8px 24px rgba(0,0,0,0.12);
+
+  --border-soft: 1px solid rgba(17,24,39,0.08);
+
+  --transition-fast: 150ms ease;
+  --transition-med: 250ms ease;
+
+  --gradient-soft: linear-gradient(180deg, rgba(59,130,246,0.10), rgba(249,250,251,1) 80%);
+
+  /* Layout */
+  --sidebar-width: 280px;
+  --content-max-width: 1200px;
+}
+
+*,
+*::before,
+*::after {
+  box-sizing: border-box;
 }
 
 html {
   line-height: 1.5;
   -webkit-text-size-adjust: 100%;
-  font-family:
-    ui-sans-serif,
-    system-ui,
-    -apple-system,
-    BlinkMacSystemFont,
-    "Segoe UI",
-    Roboto,
-    "Helvetica Neue",
-    Arial,
-    "Noto Sans",
-    sans-serif;
+  font-family: ui-sans-serif, system-ui, -apple-system, BlinkMacSystemFont, "Segoe UI",
+    Roboto, "Helvetica Neue", Arial, "Noto Sans", sans-serif;
+  color: var(--color-text);
+  background: var(--color-bg);
 }
 
 body {
   margin: 0;
   padding: 0;
-  background-color: var(--background-color);
-  color: var(--primary-color);
-  line-height: inherit;
+  min-height: 100vh;
+  background: var(--gradient-soft);
 }
 
-* {
-  box-sizing: border-box;
+/* Generic utility classes */
+.container {
+  width: 100%;
+  max-width: var(--content-max-width);
+  margin: 0 auto;
+  padding: 1rem;
+}
+
+.card {
+  background: var(--color-surface);
+  border: var(--border-soft);
+  border-radius: var(--radius-lg);
+  box-shadow: var(--shadow-sm);
+}
+
+.button {
+  display: inline-flex;
+  align-items: center;
+  gap: 0.5rem;
+  padding: 0.65rem 1rem;
+  border-radius: var(--radius-sm);
+  border: var(--border-soft);
+  background: var(--color-surface);
+  color: var(--color-text);
+  cursor: pointer;
+  transition: transform var(--transition-fast), box-shadow var(--transition-fast), background var(--transition-fast);
+}
+.button:hover {
+  box-shadow: var(--shadow-md);
+  transform: translateY(-1px);
+}
+.button--primary {
+  background: var(--color-primary);
+  color: white;
+  border-color: rgba(0,0,0,0);
+}
+.button--danger {
+  background: var(--color-error);
+  color: white;
+  border-color: rgba(0,0,0,0);
+}
+.button--ghost {
+  background: transparent;
+  border-color: rgba(17,24,39,0.15);
+}
+.input,
+.textarea {
+  width: 100%;
+  padding: 0.75rem 0.9rem;
+  border-radius: var(--radius-sm);
+  border: var(--border-soft);
+  background: var(--color-surface);
+  color: var(--color-text);
+  outline: none;
+  transition: box-shadow var(--transition-fast), border-color var(--transition-fast);
+}
+.input:focus,
+.textarea:focus {
+  border-color: rgba(37, 99, 235, 0.5);
+  box-shadow: 0 0 0 4px rgba(37, 99, 235, 0.12);
+}
+
+.hidden {
+  display: none !important;
+}
+
+/* Layout shell */
+.app-shell {
+  display: grid;
+  grid-template-columns: var(--sidebar-width) 1fr;
+  min-height: 100vh;
+}
+@media (max-width: 960px) {
+  .app-shell {
+    grid-template-columns: 1fr;
+  }
+}
+
+/* Sidebar */
+.sidebar {
+  position: sticky;
+  top: 0;
+  height: 100vh;
+  padding: 1rem;
+  border-right: var(--border-soft);
+  background: var(--color-surface);
+  box-shadow: var(--shadow-sm);
+}
+@media (max-width: 960px) {
+  .sidebar {
+    position: relative;
+    height: auto;
+  }
+}
+.sidebar__brand {
+  display: flex;
+  align-items: center;
+  gap: .75rem;
+  padding: .75rem 1rem;
+  border-radius: var(--radius-md);
+  background: #eef2ff;
+  color: #1e3a8a;
+  font-weight: 600;
+  margin-bottom: 1rem;
+}
+.sidebar__section-title {
+  font-size: .8rem;
+  letter-spacing: .06em;
+  text-transform: uppercase;
+  color: #6b7280;
+  margin: 1rem .5rem .5rem;
+}
+.nav-list {
+  list-style: none;
+  margin: 0;
+  padding: 0;
+}
+.nav-item {
+  display: flex;
+  align-items: center;
+  gap: .6rem;
+  padding: .6rem .8rem;
+  margin: .2rem 0;
+  border-radius: var(--radius-sm);
+  color: #374151;
+  cursor: pointer;
+  transition: background var(--transition-fast), transform var(--transition-fast);
+}
+.nav-item:hover {
+  background: #f3f4f6;
+  transform: translateX(2px);
+}
+.nav-item--active {
+  background: rgba(37, 99, 235, 0.1);
+  color: #1d4ed8;
+}
+
+/* Main */
+.main {
+  padding: 1rem 1.2rem 4rem;
+}
+.main__header {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  gap: .8rem;
+  margin-bottom: 1rem;
+}
+.main__title {
+  margin: 0;
+  font-size: 1.5rem;
+  letter-spacing: -0.02em;
+}
+
+/* Notes list grid */
+.notes-grid {
+  display: grid;
+  grid-template-columns: repeat(12, 1fr);
+  gap: 12px;
+}
+@media (max-width: 1280px) {
+  .notes-grid {
+    grid-template-columns: repeat(8, 1fr);
+  }
+}
+@media (max-width: 960px) {
+  .notes-grid {
+    grid-template-columns: repeat(6, 1fr);
+  }
+}
+@media (max-width: 640px) {
+  .notes-grid {
+    grid-template-columns: repeat(4, 1fr);
+  }
+}
+.note-card {
+  grid-column: span 4;
+  padding: .9rem;
+  border-radius: var(--radius-lg);
+  background: var(--color-surface);
+  border: var(--border-soft);
+  box-shadow: var(--shadow-sm);
+  transition: box-shadow var(--transition-fast), transform var(--transition-fast), border-color var(--transition-fast);
+  cursor: pointer;
+}
+.note-card:hover {
+  box-shadow: var(--shadow-md);
+  transform: translateY(-2px);
+  border-color: rgba(37, 99, 235, 0.25);
+}
+.note-card__title {
+  margin: 0 0 .5rem;
+  font-size: 1.05rem;
+  font-weight: 600;
+}
+.note-card__meta {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  font-size: .8rem;
+  color: #6b7280;
+  margin-top: .5rem;
+}
+
+/* Editor */
+.editor {
+  display: grid;
+  gap: .75rem;
+  padding: 1rem;
+}
+.editor__actions {
+  display: flex;
+  gap: .5rem;
+  justify-content: flex-end;
+}
+
+/* Floating Action Button */
+.fab {
+  position: fixed;
+  right: 20px;
+  bottom: 24px;
+  width: 56px;
+  height: 56px;
+  border-radius: 999px;
+  background: var(--color-primary);
+  color: #fff;
+  display: grid;
+  place-items: center;
+  box-shadow: var(--shadow-lg);
+  cursor: pointer;
+  border: none;
+  transition: transform var(--transition-med), box-shadow var(--transition-med), background var(--transition-fast);
+}
+.fab:hover {
+  transform: translateY(-3px) scale(1.03);
+  box-shadow: 0 12px 28px rgba(37,99,235,0.35);
+  background: #1d4ed8;
+}
+.fab:active {
+  transform: translateY(0) scale(0.98);
+}
+
+/* Tags and filters */
+.tag {
+  display: inline-flex;
+  align-items: center;
+  gap: .35rem;
+  padding: .25rem .55rem;
+  border-radius: 999px;
+  font-size: .75rem;
+  background: #f3f4f6;
+  border: var(--border-soft);
+}
+.tag--amber {
+  background: rgba(245, 158, 11, 0.12);
+  color: #92400e;
+  border-color: rgba(245, 158, 11, 0.25);
+}
+.tag--blue {
+  background: rgba(37, 99, 235, 0.12);
+  color: #1e3a8a;
+  border-color: rgba(37, 99, 235, 0.25);
+}
+
+/* Small helper */
+.mono {
+  font-family: ui-monospace, SFMono-Regular, Menlo, Monaco, Consolas, "Liberation Mono", "Courier New", monospace;
 }

@@ -1,65 +1,74 @@
-# Qwik City App ⚡️
+# Ocean Notes (Qwik) ⚡️
 
-- [Qwik Docs](https://qwik.dev/)
-- [Discord](https://qwik.dev/chat)
-- [Qwik GitHub](https://github.com/QwikDev/qwik)
-- [@QwikDev](https://twitter.com/QwikDev)
-- [Vite](https://vitejs.dev/)
+A modern, minimalist notes app UI built with Qwik & QwikCity, styled with the Ocean Professional theme.
 
----
+- Sidebar navigation
+- Notes listing, create, edit, delete (CRUD via REST)
+- Floating action button for quick add
+- Responsive, accessible UI
 
-## Project Structure
+## Theme
 
-This project is using Qwik with [QwikCity](https://qwik.dev/qwikcity/overview/). QwikCity is just an extra set of tools on top of Qwik to make it easier to build a full site, including directory-based routing, layouts, and more.
+Ocean Professional
+- Primary: #2563EB
+- Secondary/Success: #F59E0B
+- Error: #EF4444
+- Background: #f9fafb
+- Surface: #ffffff
+- Text: #111827
 
-Inside your project, you'll see the following directory structure:
+Implemented with subtle shadows, rounded corners, and smooth transitions.
 
-```
-├── public/
-│   └── ...
-└── src/
-    ├── components/
-    │   └── ...
-    └── routes/
-        └── ...
-```
+## Quick start
 
-- `src/routes`: Provides the directory-based routing, which can include a hierarchy of `layout.tsx` layout files, and an `index.tsx` file as the page. Additionally, `index.ts` files are endpoints. Please see the [routing docs](https://qwik.dev/qwikcity/routing/overview/) for more info.
+```bash
+# Install
+npm install
 
-- `src/components`: Recommended directory for components.
+# Optional: set API base (if backend hosted on different origin)
+cp .env.example .env
+# then edit .env and set VITE_API_BASE=http://localhost:8000
 
-- `public`: Any static assets, like images, can be placed in the public directory. Please see the [Vite public directory](https://vitejs.dev/guide/assets.html#the-public-directory) for more info.
+# Dev
+npm start
 
-## Add Integrations and deployment
+# Preview production
+npm run preview
 
-Use the `npm run qwik add` command to add additional integrations. Some examples of integrations includes: Cloudflare, Netlify or Express Server, and the [Static Site Generator (SSG)](https://qwik.dev/qwikcity/guides/static-site-generation/).
-
-```shell
-npm run qwik add # or `yarn qwik add`
-```
-
-## Development
-
-Development mode uses [Vite's development server](https://vitejs.dev/). The `dev` command will server-side render (SSR) the output during development.
-
-```shell
-npm start # or `yarn start`
+# Build
+npm run build
 ```
 
-> Note: during dev mode, Vite may request a significant number of `.js` files. This does not represent a Qwik production build.
+## REST API
 
-## Preview
+This app expects the following endpoints from the backend (SQLite-backed service):
 
-The preview command will create a production build of the client modules, a production build of `src/entry.preview.tsx`, and run a local server. The preview server is only for convenience to preview a production build locally and should not be used as a production server.
+- GET    /api/notes?q=<search>&tags=<comma,list>
+- POST   /api/notes
+- PUT    /api/notes/{id}
+- DELETE /api/notes/{id}
 
-```shell
-npm run preview # or `yarn preview`
+Adjust VITE_API_BASE if your backend is on a separate origin.
+
+## Structure
+
+```
+src/
+  routes/
+    index.tsx          # App shell with sidebar, list, editor, FAB
+  services/
+    notes-service.ts   # REST API integration
+  ui/
+    NotesSidebar.tsx   # Sidebar with search and tags
+    NotesList.tsx      # Grid list of notes
+    NoteEditor.tsx     # Create/Edit note form
 ```
 
-## Production
+## Accessibility
 
-The production build will generate client and server modules by running both client and server build commands. The build command will use Typescript to run a type check on the source code.
+- Buttons and interactive cards have roles, labels, and focus handling where appropriate.
+- Colors use accessible contrast for text and critical actions.
 
-```shell
-npm run build # or `yarn build`
-```
+## License
+
+MIT
